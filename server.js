@@ -10,7 +10,7 @@ const { getid } = require('./id_cnt')
 
 
 const app = express()
-app.use(cors())
+app.use(cors({}))
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended:true}));
 
@@ -31,6 +31,7 @@ async function connectDb(){
 app.use(goalRoute)
 app.use(taskRoute)
 app.get('/createtodo', async (req, res)=>{
+    console.log("hello")
     deleteAll()
     const gdata = await displaygoal();
     gdata.map(async (item)=>{
@@ -47,6 +48,8 @@ app.get('/createtodo', async (req, res)=>{
             await addTodo(newdata)
         }
     })
+    res.send("completed")
+    
 })
 
 connectDb();
