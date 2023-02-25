@@ -1,5 +1,6 @@
 const { getid } = require('../id_cnt')
 const todos = require('./todo.mongo')
+const mongo = require('mongodb')
 
 async function getall() {
     const data = await todos.find({})
@@ -22,22 +23,17 @@ async function findDay(day) {
     return data
 }
 async function addTodo(data) {
-
-    data.id = getid()
-    await todos.updateOne({
-        task: data.task
-    }, data, {
-        upsert: true
-    })
+    const newdata = await todos.create(data)
+    return newdata
 }
-async function deleteOne(id) {
+async function deleteOne(data) {
     await todos.deleteOne({
-        id: id 
+        _id: new mongo.ObjectId(data._id)
     })
 }
 async function changestatus(id,val) {
     await todos.updateOne({
-        id: id
+        _id: new mongo.ObjectId(id)
     }, {
         status: !val
     })

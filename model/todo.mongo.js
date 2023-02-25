@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
 const todoSchema = mongoose.Schema({
-    id:Number,
     status:Boolean,
     task:String,
     des:String,

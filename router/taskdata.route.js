@@ -30,9 +30,9 @@ taskRoute.get('/changestatuscross/:id',async(req,res)=>{
     changestatus(id,false)
     res.send("Changed")
 })
-taskRoute.get('/todo/delete/:id', async (req,res)=>{
-    const id = req.params.id
-    await deleteOne(id)
+taskRoute.post('/todo/delete', async (req,res)=>{
+    const data = req.body
+    await deleteOne(data)
 })
 taskRoute.post('/todo/addnew', async(req,res)=>{
     const data = req.body
