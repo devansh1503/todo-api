@@ -8,14 +8,15 @@ async function addgoal(data){
     })
 }
 
-async function displaygoal(){
-    const data =  await goals.find()
+async function displaygoal(userId){
+    const data =  await goals.find({userId:userId})
     return data
 }
 
-async function deletegoal(id){
+async function deletegoal(id,userId){
     await goals.deleteOne({
-        id: id
+        id: id,
+        userId:userId
     })
 }
 

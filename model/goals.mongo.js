@@ -5,6 +5,7 @@ const goalschema = mongoose.Schema({
     goal:String,
     subtasks:[String],
     time:Number,
+    userId:mongoose.Schema.Types.ObjectId
 })
 
 module.exports = mongoose.model('goals',goalschema)
