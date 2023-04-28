@@ -18,6 +18,7 @@ app.use(cors({
     methods:["GET","POST"],
     credentials:true,
 }))
+app.enable('trust proxy')
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
