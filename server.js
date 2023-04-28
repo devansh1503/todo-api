@@ -9,6 +9,8 @@ const { addTodo, deleteAll } = require('./model/tododata')
 const { getid } = require('./id_cnt')
 const userRoute = require('./router/userdata.route')
 const session = require("express-session")
+const { collectReward } = require('./model/usersdata')
+const { notesRouter } = require('./router/notedata.route')
 
 const app = express()
 app.use(cors({
@@ -38,11 +40,12 @@ app.use(session({
     secret: 'devanshplanb',
     resave: false,
     saveUninitialized: true,
-    cookie:{maxAge:60000, httpOnly:false}
+    cookie:{maxAge:60*60*60000, httpOnly:false}
 }));
 app.use(goalRoute);
 app.use(taskRoute);
 app.use(userRoute);
+app.use(notesRouter);
 app.get("/checkCookie", (req,res)=>{
     if(req.session.userId){
         res.send("exits")
@@ -69,6 +72,7 @@ app.get('/createtodo', async (req, res) => {
             await addTodo(newdata)
         }
     })
+    collectReward(req.session.userId, false);
     res.send("completed")
 
 })

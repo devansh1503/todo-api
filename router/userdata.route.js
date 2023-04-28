@@ -1,5 +1,5 @@
 const express = require('express');
-const { newUser, loginUser } = require('../model/usersdata');
+const { newUser, loginUser, userImage, addScore, collectReward } = require('../model/usersdata');
 const userRoute = express.Router();
 
 userRoute.post('/signup',async (req,res)=>{
@@ -19,5 +19,20 @@ userRoute.post('/login', async (req,res)=>{
     }
     else res.send("not found")
 })
+userRoute.post('/image', async (req,res)=>{
+    const url = req.body.url;
+    await userImage(url,req.session.userId);
+    res.send("uploaded")
+})
 
+userRoute.post('/score', async (req,res)=>{
+    const score = req.body.score;
+    const result = await addScore(score,req.session.userId);
+    res.send(result)
+})
+
+userRoute.get('/reward', async(req,res)=>{
+    await collectReward(req.session.userId, true)
+    res.send('reward updated');
+})
 module.exports = userRoute;

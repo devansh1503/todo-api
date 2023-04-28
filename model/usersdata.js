@@ -13,7 +13,37 @@ const loginUser = async(data) =>{
     return user;
 }
 
+const userImage = async(url,id) =>{
+    const user = await users.updateOne({
+        _id:id
+    },{
+        imgurl:url
+    })
+    return user;
+}
+
+const addScore = async (score,id) =>{
+    const user = await users.updateOne({
+        _id:id
+    },{
+        $inc:{
+            score:score
+        }
+    })
+    return user
+}
+
+const collectReward = async (id,bool) =>{
+    const user = await users.updateOne({
+        _id:id
+    },{
+        rewardCollected:bool
+    })
+}
 module.exports = {
     newUser,
     loginUser,
+    userImage,
+    addScore,
+    collectReward,
 }
