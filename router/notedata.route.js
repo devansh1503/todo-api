@@ -5,6 +5,7 @@ const notesRouter = express.Router();
 
 notesRouter.get('/notes', async (req, res) => {
     try {
+        console.log(req.session.userId)
         const result = await getNotes(req.session.userId);
         res.json(result);
     } catch (error) {
